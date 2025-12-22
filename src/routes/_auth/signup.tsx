@@ -1,8 +1,8 @@
-import { LoginForm } from "@/components/login-form";
+import { SignupForm } from "@/components/signup-form";
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/_auth/signup")({
   component: RouteComponent,
 });
 
@@ -16,7 +16,7 @@ function RouteComponent() {
           </div>
           Jewellery Dasboard
         </a>
-        <LoginForm />
+        <SignupForm />
       </div>
     </div>
   );
