@@ -1,15 +1,13 @@
 import * as React from "react";
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
+  ArrowRightLeft,
+  BarChart3,
+  Box,
   Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
+  Gem,
+  Hammer,
+  LayoutDashboard,
   Settings2,
-  SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -23,138 +21,117 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useStore } from "@tanstack/react-store";
+import { authStore } from "@/stores/auth";
 
-// This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: "Jewellery Store",
+      logo: Gem,
+      plan: "Main Branch",
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: "Workshop",
+      logo: Hammer,
+      plan: "Manufacturing",
     },
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Dashboard",
+      url: "/",
+      icon: LayoutDashboard,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Overview",
+          url: "/",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Gold Prices",
+          url: "/market",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Inventory",
+      url: "/inventory",
+      icon: Box,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Materials (MIS)",
+          url: "/inventory/materials",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Finished Goods (FGIS)",
+          url: "/inventory/products",
         },
         {
-          title: "Quantum",
-          url: "#",
+          title: "Stocktake Audit",
+          url: "/inventory/audit",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+      title: "Trading Desk",
+      url: "/trade",
+      icon: ArrowRightLeft,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Buy / Sell Gold",
+          url: "/trade/new",
         },
         {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Transaction Ledger",
+          url: "/trade/history",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "Production",
+      url: "/production",
+      icon: Hammer,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Active Jobs",
+          url: "/production/jobs",
         },
         {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          title: "Recipes",
+          url: "/production/recipes",
         },
       ],
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
-      url: "#",
+      name: "Financial Reports",
+      url: "/reports",
+      icon: BarChart3,
+    },
+    {
+      name: "Vendor Management",
+      url: "/vendors",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "Settings",
+      url: "/settings",
+      icon: Settings2,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const authState = useStore(authStore, (state) => state);
+
+  const user = authState.user || {
+    name: "User",
+    email: "user@example.com",
+    avatar: "",
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -165,7 +142,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={{ name: "Admin", email: user.email, avatar: "" }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
