@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useProducts, type Product } from "@/hooks/use-product";
+import { useProducts, type Product } from "@/hooks/use-products";
 import { DataTable } from "./-components/data-table";
 import { type ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { AddProductDialog } from "./-components/add-product-dialog";
 import { RecipeDialog } from "./-components/recipe-dialog";
+import { ProduceDialog } from "./-components/produce-dialog";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Beaker, MoreHorizontal } from "lucide-react";
+import { Beaker, Hammer, MoreHorizontal } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/inventory/products")({
   component: RouteComponent,
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/_authenticated/inventory/products")({
 
 interface TableMeta {
   onManageRecipe: (product: Product) => void;
+  onProduce: (product: Product) => void;
 }
 
 const columns: ColumnDef<Product>[] = [
@@ -122,6 +124,9 @@ const columns: ColumnDef<Product>[] = [
             >
               <Beaker className="mr-2 h-4 w-4" /> Manage Recipe (BOM)
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => meta?.onProduce(row.original)}>
+              <Hammer className="mr-2 h-4 w-4" /> Record Production
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -134,6 +139,14 @@ function RouteComponent() {
 
   const [recipeProduct, setRecipeProduct] = useState<Product | null>(null);
   const [isRecipeOpen, setIsRecipeOpen] = useState(false);
+
+  const [produceProduct, setProduceProduct] = useState<Product | null>(null);
+  const [isProduceOpen, setIsProduceOpen] = useState(false);
+
+  const handleProduce = (product: Product) => {
+    setProduceProduct(product);
+    setIsProduceOpen(true);
+  };
 
   const handleManageRecipe = (product: Product) => {
     setRecipeProduct(product);
@@ -159,13 +172,22 @@ function RouteComponent() {
       <DataTable
         columns={columns}
         data={products || []}
-        meta={{ onManageRecipe: handleManageRecipe }}
+        meta={{
+          onManageRecipe: handleManageRecipe,
+          onProduce: handleProduce,
+        }}
       />
 
       <RecipeDialog
         product={recipeProduct}
         open={isRecipeOpen}
         onOpenChange={setIsRecipeOpen}
+      />
+
+      <ProduceDialog
+        product={produceProduct}
+        open={isProduceOpen}
+        onOpenChange={setIsProduceOpen}
       />
     </div>
   );

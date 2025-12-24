@@ -5,7 +5,7 @@ import {
   useAddComponent,
   useDeleteComponent,
 } from "@/hooks/use-recipes";
-import { type Product } from "@/hooks/use-product";
+import { type Product } from "@/hooks/use-products";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

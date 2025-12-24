@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
-import { useCreateProduct } from "@/hooks/use-product";
+import { useCreateProduct } from "@/hooks/use-products";
 
 import { Button } from "@/components/ui/button";
 import {

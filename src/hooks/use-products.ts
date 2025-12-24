@@ -46,3 +46,18 @@ export const useCreateProduct = () => {
     },
   });
 };
+
+export const useProduceItem = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ productId, quantity }: { productId: number, quantity: number }) => {
+      await api.post(`/products/${productId}/produce`, { quantity });
+    },
+    onSuccess: () => {
+      toast.success("Production recorded successfully");
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["materials"] });
+    },
+  });
+};
