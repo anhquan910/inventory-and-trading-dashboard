@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthenticatedInventoryProductsRouteImport } from './routes/_authenticated/inventory/products'
 import { Route as AuthenticatedInventoryMaterialsRouteImport } from './routes/_authenticated/inventory/materials'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -39,6 +40,12 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthenticatedInventoryProductsRoute =
+  AuthenticatedInventoryProductsRouteImport.update({
+    id: '/inventory/products',
+    path: '/inventory/products',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedInventoryMaterialsRoute =
   AuthenticatedInventoryMaterialsRouteImport.update({
     id: '/inventory/materials',
@@ -51,12 +58,14 @@ export interface FileRoutesByFullPath {
   '/signup': typeof AuthSignupRoute
   '/': typeof AuthenticatedIndexRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
+  '/inventory/products': typeof AuthenticatedInventoryProductsRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/': typeof AuthenticatedIndexRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
+  '/inventory/products': typeof AuthenticatedInventoryProductsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -66,12 +75,23 @@ export interface FileRoutesById {
   '/_auth/signup': typeof AuthSignupRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
+  '/_authenticated/inventory/products': typeof AuthenticatedInventoryProductsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/signup' | '/' | '/inventory/materials'
+  fullPaths:
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/inventory/materials'
+    | '/inventory/products'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/' | '/inventory/materials'
+  to:
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/inventory/materials'
+    | '/inventory/products'
   id:
     | '__root__'
     | '/_auth'
@@ -80,6 +100,7 @@ export interface FileRouteTypes {
     | '/_auth/signup'
     | '/_authenticated/'
     | '/_authenticated/inventory/materials'
+    | '/_authenticated/inventory/products'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -124,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_authenticated/inventory/products': {
+      id: '/_authenticated/inventory/products'
+      path: '/inventory/products'
+      fullPath: '/inventory/products'
+      preLoaderRoute: typeof AuthenticatedInventoryProductsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/inventory/materials': {
       id: '/_authenticated/inventory/materials'
       path: '/inventory/materials'
@@ -149,11 +177,13 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedInventoryMaterialsRoute: typeof AuthenticatedInventoryMaterialsRoute
+  AuthenticatedInventoryProductsRoute: typeof AuthenticatedInventoryProductsRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedInventoryMaterialsRoute: AuthenticatedInventoryMaterialsRoute,
+  AuthenticatedInventoryProductsRoute: AuthenticatedInventoryProductsRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

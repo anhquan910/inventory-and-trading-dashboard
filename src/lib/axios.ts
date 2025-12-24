@@ -29,6 +29,7 @@ api.interceptors.response.use(
 
     if (status === 401) {
       logout();
+      window.location.href = "/login";
     }
 
     toast.error(message);
