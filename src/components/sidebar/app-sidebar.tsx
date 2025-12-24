@@ -80,7 +80,7 @@ const data = {
       items: [
         {
           title: "Buy / Sell Gold",
-          url: "/trade/new",
+          url: "/trade",
         },
         {
           title: "Transaction Ledger",

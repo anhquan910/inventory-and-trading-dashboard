@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthenticatedTradeIndexRouteImport } from './routes/_authenticated/trade/index'
 import { Route as AuthenticatedInventoryProductsRouteImport } from './routes/_authenticated/inventory/products'
 import { Route as AuthenticatedInventoryMaterialsRouteImport } from './routes/_authenticated/inventory/materials'
 
@@ -40,6 +41,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthenticatedTradeIndexRoute = AuthenticatedTradeIndexRouteImport.update({
+  id: '/trade/',
+  path: '/trade/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedInventoryProductsRoute =
   AuthenticatedInventoryProductsRouteImport.update({
     id: '/inventory/products',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/trade': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/trade': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/_authenticated/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/_authenticated/trade/': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/inventory/materials'
     | '/inventory/products'
+    | '/trade'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -92,6 +102,7 @@ export interface FileRouteTypes {
     | '/'
     | '/inventory/materials'
     | '/inventory/products'
+    | '/trade'
   id:
     | '__root__'
     | '/_auth'
@@ -101,6 +112,7 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/inventory/materials'
     | '/_authenticated/inventory/products'
+    | '/_authenticated/trade/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_authenticated/trade/': {
+      id: '/_authenticated/trade/'
+      path: '/trade'
+      fullPath: '/trade'
+      preLoaderRoute: typeof AuthenticatedTradeIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/inventory/products': {
       id: '/_authenticated/inventory/products'
       path: '/inventory/products'
@@ -178,12 +197,14 @@ interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedInventoryMaterialsRoute: typeof AuthenticatedInventoryMaterialsRoute
   AuthenticatedInventoryProductsRoute: typeof AuthenticatedInventoryProductsRoute
+  AuthenticatedTradeIndexRoute: typeof AuthenticatedTradeIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedInventoryMaterialsRoute: AuthenticatedInventoryMaterialsRoute,
   AuthenticatedInventoryProductsRoute: AuthenticatedInventoryProductsRoute,
+  AuthenticatedTradeIndexRoute: AuthenticatedTradeIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
