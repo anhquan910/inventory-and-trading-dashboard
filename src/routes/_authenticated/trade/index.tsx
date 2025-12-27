@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useProducts } from "@/hooks/use-products";
 import { useMaterials } from "@/hooks/use-inventory";
@@ -23,7 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ShoppingCart, RefreshCcw, DollarSign, Trash2 } from "lucide-react";
+import {
+  ShoppingCart,
+  RefreshCcw,
+  DollarSign,
+  Trash2,
+  Wallet,
+} from "lucide-react";
 
 interface CartItem {
   id: string;
@@ -42,7 +48,7 @@ function RouteComponent() {
   const [mode, setMode] = useState<"RETAIL" | "TRADE">("RETAIL");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [customer, setCustomer] = useState("");
-
+  const [amountPaid, setAmountPaid] = useState<string>("");
   const { data: products } = useProducts();
   const { data: materials } = useMaterials();
   const { mutateAsync: submitTxn, isPending } = useSubmitTransaction();
@@ -50,6 +56,10 @@ function RouteComponent() {
   const [selectedItem, setSelectedItem] = useState("");
   const [qty, setQty] = useState(1);
   const [tradeAction, setTradeAction] = useState<"BUY" | "SELL">("BUY");
+  const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  useEffect(() => {
+    setAmountPaid(total.toString());
+  }, [total]);
 
   const addToCart = () => {
     if (!selectedItem) return;
@@ -80,10 +90,18 @@ function RouteComponent() {
         {
           id: Math.random().toString(),
           targetId: material.id,
-          name: `${isBuying ? "BUY" : "SELL"} ${material.name}`,
+          name: `${isBuying ? "BUY (In)" : "SELL (Out)"} ${material.name}`,
           type: "MATERIAL",
+          // Buying: We gain stock (+). Selling: We lose stock (-).
           quantity: isBuying ? qty : -qty,
-          price: material.cost_per_unit,
+
+          // Buying: We pay money (Negative Price).
+          // Selling: We receive money (Positive Result required).
+          // Since Qty is Negative for selling, we need Price to be Negative
+          // so that (Neg * Neg = Pos)
+          price: isBuying
+            ? -material.cost_per_unit // (+Qty * -Price = -Total) -> We Pay
+            : -material.cost_per_unit, // (-Qty * -Price = +Total) -> We Get Paid
         },
       ]);
     }
@@ -98,10 +116,12 @@ function RouteComponent() {
 
   const handleCheckout = async () => {
     if (cart.length === 0) return;
+    const paid = parseFloat(amountPaid) || 0;
 
     const payload = {
       type: mode,
       customer_name: customer || "Walk-in",
+      amount_paid: paid,
       items: cart.map((item) => ({
         product_id: item.type === "PRODUCT" ? item.targetId : null,
         material_id: item.type === "MATERIAL" ? item.targetId : null,
@@ -113,10 +133,13 @@ function RouteComponent() {
     await submitTxn(payload);
     setCart([]);
     setCustomer("");
+    setAmountPaid("");
   };
 
-  // Calc Total
-  const total = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const paidVal = parseFloat(amountPaid) || 0;
+  const balance = total - paidVal;
+  const isDebt = balance > 0.01;
+  const isChange = balance < -0.01;
 
   return (
     <div className="p-8 h-[calc(100vh-4rem)] flex flex-col gap-6">
@@ -127,7 +150,6 @@ function RouteComponent() {
           <p className="text-muted-foreground">Point of Sale & Gold Trading</p>
         </div>
 
-        {/* MODE SWITCHER */}
         <div className="flex items-center gap-2 bg-muted p-1 rounded-lg">
           <Button
             variant={mode === "RETAIL" ? "default" : "ghost"}
@@ -166,7 +188,6 @@ function RouteComponent() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Customer Input */}
             <div className="grid gap-2">
               <Label>Customer Name</Label>
               <Input
@@ -178,7 +199,6 @@ function RouteComponent() {
 
             <Separator />
 
-            {/* PRODUCT / MATERIAL SELECTION */}
             <div className="grid gap-4">
               {mode === "RETAIL" ? (
                 <div className="space-y-2">
@@ -199,7 +219,6 @@ function RouteComponent() {
                   </Select>
                 </div>
               ) : (
-                // TRADE MODE INPUTS
                 <>
                   <div className="flex gap-4">
                     <Button
@@ -299,15 +318,44 @@ function RouteComponent() {
               </div>
             )}
           </CardContent>
+
+          {/* --- PAYMENT FOOTER --- */}
           <Separator />
           <CardFooter className="flex-col gap-4 bg-muted/50 p-6">
+            {/* Totals Row */}
             <div className="flex justify-between w-full text-lg font-bold">
-              <span>Total:</span>
-              {/* If Trade Mode + Buying: Total is what we PAY (Show as Red or Negative?)
-                  Let's keep it simple: Just show the sum.
-               */}
+              <span>Total Due:</span>
               <span>${total.toFixed(2)}</span>
             </div>
+
+            {/* Payment Input Row */}
+            <div className="grid grid-cols-4 items-center gap-2 w-full">
+              <Label className="col-span-1 text-right flex items-center justify-end gap-1">
+                <Wallet className="w-4 h-4" /> Paid:
+              </Label>
+              <Input
+                className="col-span-3 text-right font-mono"
+                type="number"
+                placeholder="Amount Paid"
+                value={amountPaid}
+                onChange={(e) => setAmountPaid(e.target.value)}
+              />
+            </div>
+
+            {/* Dynamic Balance / Debt Feedback */}
+            {isDebt && (
+              <div className="flex justify-between w-full text-sm font-semibold text-destructive animate-pulse bg-red-50 p-2 rounded">
+                <span>Balance Due (Debt):</span>
+                <span>${balance.toFixed(2)}</span>
+              </div>
+            )}
+            {isChange && (
+              <div className="flex justify-between w-full text-sm font-semibold text-green-600 bg-green-50 p-2 rounded">
+                <span>Change Due:</span>
+                <span>${Math.abs(balance).toFixed(2)}</span>
+              </div>
+            )}
+
             <Button
               className="w-full h-12 text-lg"
               disabled={cart.length === 0 || isPending}
@@ -317,7 +365,8 @@ function RouteComponent() {
                 "Processing..."
               ) : (
                 <span className="flex items-center gap-2">
-                  <DollarSign className="w-5 h-5" /> Confirm Transaction
+                  <DollarSign className="w-5 h-5" />
+                  {isDebt ? "Confirm with Debt" : "Confirm Transaction"}
                 </span>
               )}
             </Button>
