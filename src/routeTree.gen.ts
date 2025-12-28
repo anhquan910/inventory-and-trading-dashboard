@@ -15,10 +15,13 @@ import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthenticatedTradeIndexRouteImport } from './routes/_authenticated/trade/index'
+import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedMarketIndexRouteImport } from './routes/_authenticated/market/index'
 import { Route as AuthenticatedTradeHistoryRouteImport } from './routes/_authenticated/trade/history'
+import { Route as AuthenticatedProductionJobsRouteImport } from './routes/_authenticated/production/jobs'
 import { Route as AuthenticatedInventoryProductsRouteImport } from './routes/_authenticated/inventory/products'
 import { Route as AuthenticatedInventoryMaterialsRouteImport } from './routes/_authenticated/inventory/materials'
+import { Route as AuthenticatedInventoryAuditRouteImport } from './routes/_authenticated/inventory/audit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -48,6 +51,12 @@ const AuthenticatedTradeIndexRoute = AuthenticatedTradeIndexRouteImport.update({
   path: '/trade/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedReportsIndexRoute =
+  AuthenticatedReportsIndexRouteImport.update({
+    id: '/reports/',
+    path: '/reports/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedMarketIndexRoute =
   AuthenticatedMarketIndexRouteImport.update({
     id: '/market/',
@@ -58,6 +67,12 @@ const AuthenticatedTradeHistoryRoute =
   AuthenticatedTradeHistoryRouteImport.update({
     id: '/trade/history',
     path: '/trade/history',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedProductionJobsRoute =
+  AuthenticatedProductionJobsRouteImport.update({
+    id: '/production/jobs',
+    path: '/production/jobs',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedInventoryProductsRoute =
@@ -72,25 +87,37 @@ const AuthenticatedInventoryMaterialsRoute =
     path: '/inventory/materials',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedInventoryAuditRoute =
+  AuthenticatedInventoryAuditRouteImport.update({
+    id: '/inventory/audit',
+    path: '/inventory/audit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/': typeof AuthenticatedIndexRoute
+  '/inventory/audit': typeof AuthenticatedInventoryAuditRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/production/jobs': typeof AuthenticatedProductionJobsRoute
   '/trade/history': typeof AuthenticatedTradeHistoryRoute
   '/market': typeof AuthenticatedMarketIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
   '/trade': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/': typeof AuthenticatedIndexRoute
+  '/inventory/audit': typeof AuthenticatedInventoryAuditRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/production/jobs': typeof AuthenticatedProductionJobsRoute
   '/trade/history': typeof AuthenticatedTradeHistoryRoute
   '/market': typeof AuthenticatedMarketIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
   '/trade': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRoutesById {
@@ -100,10 +127,13 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/inventory/audit': typeof AuthenticatedInventoryAuditRoute
   '/_authenticated/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/_authenticated/inventory/products': typeof AuthenticatedInventoryProductsRoute
+  '/_authenticated/production/jobs': typeof AuthenticatedProductionJobsRoute
   '/_authenticated/trade/history': typeof AuthenticatedTradeHistoryRoute
   '/_authenticated/market/': typeof AuthenticatedMarketIndexRoute
+  '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/trade/': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRouteTypes {
@@ -112,20 +142,26 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/'
+    | '/inventory/audit'
     | '/inventory/materials'
     | '/inventory/products'
+    | '/production/jobs'
     | '/trade/history'
     | '/market'
+    | '/reports'
     | '/trade'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
     | '/signup'
     | '/'
+    | '/inventory/audit'
     | '/inventory/materials'
     | '/inventory/products'
+    | '/production/jobs'
     | '/trade/history'
     | '/market'
+    | '/reports'
     | '/trade'
   id:
     | '__root__'
@@ -134,10 +170,13 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup'
     | '/_authenticated/'
+    | '/_authenticated/inventory/audit'
     | '/_authenticated/inventory/materials'
     | '/_authenticated/inventory/products'
+    | '/_authenticated/production/jobs'
     | '/_authenticated/trade/history'
     | '/_authenticated/market/'
+    | '/_authenticated/reports/'
     | '/_authenticated/trade/'
   fileRoutesById: FileRoutesById
 }
@@ -190,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTradeIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reports/': {
+      id: '/_authenticated/reports/'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/market/': {
       id: '/_authenticated/market/'
       path: '/market'
@@ -204,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTradeHistoryRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/production/jobs': {
+      id: '/_authenticated/production/jobs'
+      path: '/production/jobs'
+      fullPath: '/production/jobs'
+      preLoaderRoute: typeof AuthenticatedProductionJobsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/inventory/products': {
       id: '/_authenticated/inventory/products'
       path: '/inventory/products'
@@ -216,6 +269,13 @@ declare module '@tanstack/react-router' {
       path: '/inventory/materials'
       fullPath: '/inventory/materials'
       preLoaderRoute: typeof AuthenticatedInventoryMaterialsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/audit': {
+      id: '/_authenticated/inventory/audit'
+      path: '/inventory/audit'
+      fullPath: '/inventory/audit'
+      preLoaderRoute: typeof AuthenticatedInventoryAuditRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
   }
@@ -235,19 +295,25 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedInventoryAuditRoute: typeof AuthenticatedInventoryAuditRoute
   AuthenticatedInventoryMaterialsRoute: typeof AuthenticatedInventoryMaterialsRoute
   AuthenticatedInventoryProductsRoute: typeof AuthenticatedInventoryProductsRoute
+  AuthenticatedProductionJobsRoute: typeof AuthenticatedProductionJobsRoute
   AuthenticatedTradeHistoryRoute: typeof AuthenticatedTradeHistoryRoute
   AuthenticatedMarketIndexRoute: typeof AuthenticatedMarketIndexRoute
+  AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedTradeIndexRoute: typeof AuthenticatedTradeIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedInventoryAuditRoute: AuthenticatedInventoryAuditRoute,
   AuthenticatedInventoryMaterialsRoute: AuthenticatedInventoryMaterialsRoute,
   AuthenticatedInventoryProductsRoute: AuthenticatedInventoryProductsRoute,
+  AuthenticatedProductionJobsRoute: AuthenticatedProductionJobsRoute,
   AuthenticatedTradeHistoryRoute: AuthenticatedTradeHistoryRoute,
   AuthenticatedMarketIndexRoute: AuthenticatedMarketIndexRoute,
+  AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedTradeIndexRoute: AuthenticatedTradeIndexRoute,
 }
 

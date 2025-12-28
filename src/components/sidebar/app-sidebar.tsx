@@ -97,10 +97,6 @@ const data = {
           title: "Active Jobs",
           url: "/production/jobs",
         },
-        {
-          title: "Recipes",
-          url: "/production/recipes",
-        },
       ],
     },
   ],
@@ -109,16 +105,6 @@ const data = {
       name: "Financial Reports",
       url: "/reports",
       icon: BarChart3,
-    },
-    {
-      name: "Vendor Management",
-      url: "/vendors",
-      icon: Frame,
-    },
-    {
-      name: "Settings",
-      url: "/settings",
-      icon: Settings2,
     },
   ],
 };

@@ -68,3 +68,21 @@ export const useUpdateMaterial = () => {
     },
   });
 };
+
+export interface AuditItem {
+  material_id: number;
+  counted_quantity: number;
+}
+
+export const useSubmitAudit = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (items: AuditItem[]) => {
+      await api.post("/inventory/audit", { items });
+    },
+    onSuccess: () => {
+      toast.success("Stock levels updated");
+      queryClient.invalidateQueries({ queryKey: ["materials"] });
+    },
+  });
+};
