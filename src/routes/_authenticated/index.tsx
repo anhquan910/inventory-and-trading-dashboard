@@ -40,10 +40,18 @@ function RouteComponent() {
   const { data: materials } = useMaterials();
   const { data: recentTransactions } = useTransactions();
 
+  const historicalData =
+    marketData?.data?.filter((d: any) => !d.is_forecast) || [];
+
   const currentGoldPrice =
-    marketData?.data?.findLast((d: any) => !d.is_forecast)?.price || 0;
+    historicalData.length > 0
+      ? historicalData[historicalData.length - 1].price
+      : 0;
+
   const previousPrice =
-    marketData?.data?.[marketData.data.length - 2]?.price || 0;
+    historicalData.length > 1
+      ? historicalData[historicalData.length - 2].price
+      : 0;
   const isMarketUp = currentGoldPrice >= previousPrice;
 
   const lowStockItems = materials?.filter((m) => m.current_stock < 10) || [];

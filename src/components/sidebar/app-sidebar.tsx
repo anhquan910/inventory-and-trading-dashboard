@@ -3,11 +3,9 @@ import {
   ArrowRightLeft,
   BarChart3,
   Box,
-  Frame,
   Gem,
   Hammer,
   LayoutDashboard,
-  Settings2,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
