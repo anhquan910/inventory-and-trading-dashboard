@@ -6,10 +6,10 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), tanstackRouter({
+  plugins: [tailwindcss(), tanstackRouter({
     target: 'react',
     autoCodeSplitting: true,
-  })],
+  }), react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

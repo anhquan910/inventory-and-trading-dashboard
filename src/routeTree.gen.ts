@@ -95,22 +95,22 @@ const AuthenticatedInventoryAuditRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AuthenticatedIndexRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
-  '/': typeof AuthenticatedIndexRoute
   '/inventory/audit': typeof AuthenticatedInventoryAuditRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
   '/production/jobs': typeof AuthenticatedProductionJobsRoute
   '/trade/history': typeof AuthenticatedTradeHistoryRoute
-  '/market': typeof AuthenticatedMarketIndexRoute
-  '/reports': typeof AuthenticatedReportsIndexRoute
-  '/trade': typeof AuthenticatedTradeIndexRoute
+  '/market/': typeof AuthenticatedMarketIndexRoute
+  '/reports/': typeof AuthenticatedReportsIndexRoute
+  '/trade/': typeof AuthenticatedTradeIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof AuthenticatedIndexRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
-  '/': typeof AuthenticatedIndexRoute
   '/inventory/audit': typeof AuthenticatedInventoryAuditRoute
   '/inventory/materials': typeof AuthenticatedInventoryMaterialsRoute
   '/inventory/products': typeof AuthenticatedInventoryProductsRoute
@@ -139,22 +139,22 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/login'
     | '/signup'
-    | '/'
     | '/inventory/audit'
     | '/inventory/materials'
     | '/inventory/products'
     | '/production/jobs'
     | '/trade/history'
-    | '/market'
-    | '/reports'
-    | '/trade'
+    | '/market/'
+    | '/reports/'
+    | '/trade/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/login'
     | '/signup'
-    | '/'
     | '/inventory/audit'
     | '/inventory/materials'
     | '/inventory/products'
@@ -190,14 +190,14 @@ declare module '@tanstack/react-router' {
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -225,21 +225,21 @@ declare module '@tanstack/react-router' {
     '/_authenticated/trade/': {
       id: '/_authenticated/trade/'
       path: '/trade'
-      fullPath: '/trade'
+      fullPath: '/trade/'
       preLoaderRoute: typeof AuthenticatedTradeIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/reports/': {
       id: '/_authenticated/reports/'
       path: '/reports'
-      fullPath: '/reports'
+      fullPath: '/reports/'
       preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/market/': {
       id: '/_authenticated/market/'
       path: '/market'
-      fullPath: '/market'
+      fullPath: '/market/'
       preLoaderRoute: typeof AuthenticatedMarketIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
