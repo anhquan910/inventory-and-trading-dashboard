@@ -14,6 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// Generic data table wrapper for rendering TanStack tables in the dashboard
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -45,7 +47,7 @@ export function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );

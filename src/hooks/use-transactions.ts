@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+// Define transaction data structure
 export interface Transaction {
   id: number;
   created_at: string;
@@ -12,6 +13,7 @@ export interface Transaction {
   status: "COMPLETED" | "PENDING";
 }
 
+// Fetch transactions with optional status filtering
 export const useTransactions = (statusFilter?: string) => {
   return useQuery({
     queryKey: ["transactions", statusFilter],
@@ -23,6 +25,7 @@ export const useTransactions = (statusFilter?: string) => {
   });
 };
 
+// Mark transaction as paid
 export const useMarkPaid = () => {
   const queryClient = useQueryClient();
   return useMutation({

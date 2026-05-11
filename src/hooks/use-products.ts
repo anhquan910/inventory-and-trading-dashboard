@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+// Define product data structures
 export interface Product {
   id: number;
   sku: string;
@@ -23,6 +24,7 @@ export interface CreateProductDTO {
   stock_quantity: number;
 }
 
+// Fetch all products
 export const useProducts = () => {
   return useQuery({
     queryKey: ["products"],
@@ -33,6 +35,7 @@ export const useProducts = () => {
   });
 };
 
+// Create new product
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -47,6 +50,7 @@ export const useCreateProduct = () => {
   });
 };
 
+// Record production of finished goods
 export const useProduceItem = () => {
   const queryClient = useQueryClient();
 

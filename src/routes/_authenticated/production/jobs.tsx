@@ -8,6 +8,8 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Hammer, CheckCircle2 } from "lucide-react";
 
+// Production history route showing completed manufacturing jobs and costs
+
 export const Route = createFileRoute("/_authenticated/production/jobs")({
   component: RouteComponent,
 });

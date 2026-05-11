@@ -1,3 +1,4 @@
+// Imports
 import * as React from "react";
 import {
   ArrowRightLeft,
@@ -22,6 +23,7 @@ import {
 import { useStore } from "@tanstack/react-store";
 import { authStore } from "@/stores/auth";
 
+// Sidebar Data
 const data = {
   teams: [
     {
@@ -107,15 +109,19 @@ const data = {
   ],
 };
 
+// Component Definition
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Authentication State
   const authState = useStore(authStore, (state) => state);
 
+  // User Data Fallback
   const user = authState.user || {
     name: "User",
     email: "user@example.com",
     avatar: "",
   };
 
+  // Render Sidebar
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

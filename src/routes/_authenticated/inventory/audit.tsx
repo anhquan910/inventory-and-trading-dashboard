@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/card";
 import { ClipboardCheck, Save, AlertTriangle } from "lucide-react";
 
+// Inventory audit route for entering physical counts and submitting stock adjustments
+
 export const Route = createFileRoute("/_authenticated/inventory/audit")({
   component: RouteComponent,
 });

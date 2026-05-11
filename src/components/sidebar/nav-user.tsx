@@ -1,3 +1,4 @@
+// Imports
 import {
   BadgeCheck,
   Bell,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/stores/auth";
 
+// Component Definition
 export function NavUser({
   user,
 }: {
@@ -35,14 +37,17 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  // Sidebar and Navigation Hooks
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
+  // Logout Handler
   const handleLogout = () => {
     logout();
     navigate({ to: "/login" });
   };
 
+  // Render User Menu
   return (
     <SidebarMenu>
       <SidebarMenuItem>

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Printer, CheckCircle } from "lucide-react";
 
+// Transaction history page with ledger table, filtering, and receipt printing
 export const Route = createFileRoute("/_authenticated/trade/history")({
   component: RouteComponent,
 });
@@ -48,7 +49,7 @@ const printReceipt = (txn: Transaction) => {
 };
 
 const getColumns = (
-  markPaid: (id: number) => void
+  markPaid: (id: number) => void,
 ): ColumnDef<Transaction>[] => [
   {
     accessorKey: "created_at",
@@ -142,7 +143,7 @@ const getColumns = (
 function RouteComponent() {
   const [showDebtOnly, setShowDebtOnly] = useState(false);
   const { data: transactions, isLoading } = useTransactions(
-    showDebtOnly ? "PENDING" : undefined
+    showDebtOnly ? "PENDING" : undefined,
   );
   const { mutate: markPaid } = useMarkPaid();
 

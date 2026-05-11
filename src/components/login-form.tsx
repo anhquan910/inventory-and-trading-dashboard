@@ -1,3 +1,4 @@
+// Imports
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,12 +20,15 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "@tanstack/react-form";
 import { loginSchema, useLoginMutation } from "@/hooks/use-auth";
 
+// Component Definition
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  // Mutation Hook
   const loginMutation = useLoginMutation();
 
+  // Form Setup
   const form = useForm({
     defaultValues: {
       email: "",
@@ -38,6 +42,7 @@ export function LoginForm({
     },
   });
 
+  // Render Form
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -69,18 +74,15 @@ export function LoginForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       className={cn(
                         field.state.meta.errors.length > 0 &&
-                          "border-destructive focus-visible:ring-destructive"
+                          "border-destructive focus-visible:ring-destructive",
                       )}
                     />
-                    {/* Validation Error Message */}
                     {field.state.meta.errors.length > 0 && (
                       <FieldError errors={field.state.meta.errors} />
                     )}
                   </Field>
                 )}
               />
-
-              {/* --- PASSWORD FIELD --- */}
               <form.Field
                 name="password"
                 children={(field) => (
@@ -97,7 +99,7 @@ export function LoginForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       className={cn(
                         field.state.meta.errors.length > 0 &&
-                          "border-destructive focus-visible:ring-destructive"
+                          "border-destructive focus-visible:ring-destructive",
                       )}
                     />
                     {field.state.meta.errors.length > 0 && (
@@ -106,8 +108,6 @@ export function LoginForm({
                   </Field>
                 )}
               />
-
-              {/* --- SUBMIT BUTTON --- */}
               <Field>
                 <Button
                   type="submit"

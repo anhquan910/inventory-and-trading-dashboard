@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Beaker, Hammer, MoreHorizontal } from "lucide-react";
 
+// Finished goods inventory route for product management, BOM editing, and production recording
+
 export const Route = createFileRoute("/_authenticated/inventory/products")({
   component: RouteComponent,
 });

@@ -8,6 +8,7 @@ import {
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 
+// Authenticated layout protecting private routes and rendering the app shell
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: ({ location }) => {
     const { token } = authStore.state;

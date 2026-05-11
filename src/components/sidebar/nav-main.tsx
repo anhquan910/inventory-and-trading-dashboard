@@ -1,3 +1,4 @@
+// Imports
 import { ChevronRight, type LucideIcon } from "lucide-react";
 
 import {
@@ -16,6 +17,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
+// Component Definition
 export function NavMain({
   items,
 }: {
@@ -30,6 +32,7 @@ export function NavMain({
     }[];
   }[];
 }) {
+  // Render Navigation
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>

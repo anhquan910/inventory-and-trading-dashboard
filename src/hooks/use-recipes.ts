@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
+// Define recipe component structure
 export interface RecipeComponent {
   id: number;
   material_name: string;
@@ -9,6 +10,7 @@ export interface RecipeComponent {
   cost_at_time_of_calculation: number;
 }
 
+// Fetch recipe components for a product
 export const useRecipe = (productId: number | null) => {
   return useQuery({
     queryKey: ["recipe", productId],
@@ -21,6 +23,7 @@ export const useRecipe = (productId: number | null) => {
   });
 };
 
+// Add material component to product recipe
 export const useAddComponent = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -38,6 +41,7 @@ export const useAddComponent = () => {
   });
 };
 
+// Remove component from product recipe
 export const useDeleteComponent = () => {
   const queryClient = useQueryClient();
 

@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 
+// Dashboard route showing KPIs, market data, inventory alerts, and recent transactions
 export const Route = createFileRoute("/_authenticated/")({
   component: RouteComponent,
 });

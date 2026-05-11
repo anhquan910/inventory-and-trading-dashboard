@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/select";
 import { DollarSign, TrendingUp, TrendingDown, PiggyBank } from "lucide-react";
 
+// Financial reports route for revenue, cost, and profitability analysis
+
 export const Route = createFileRoute("/_authenticated/reports/")({
   component: RouteComponent,
 });

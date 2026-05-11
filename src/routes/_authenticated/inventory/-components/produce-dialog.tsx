@@ -3,6 +3,8 @@ import { useRecipe } from "@/hooks/use-recipes";
 import { useProduceItem } from "@/hooks/use-products";
 import { type Product } from "@/hooks/use-products";
 
+// Dialog for recording production output and material consumption
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

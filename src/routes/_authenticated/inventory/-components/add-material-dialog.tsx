@@ -3,6 +3,8 @@ import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { useCreateMaterial } from "@/hooks/use-inventory";
 
+// Dialog component for adding raw material inventory items
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

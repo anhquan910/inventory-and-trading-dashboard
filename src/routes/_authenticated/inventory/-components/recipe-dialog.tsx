@@ -6,6 +6,8 @@ import {
   useDeleteComponent,
 } from "@/hooks/use-recipes";
 import { type Product } from "@/hooks/use-products";
+
+// Recipe dialog for defining a product's bill of materials and material quantities
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -62,7 +64,7 @@ export function RecipeDialog({ product, open, onOpenChange }: Props) {
   const totalRecipeCost =
     components?.reduce(
       (sum, item) => sum + item.cost_at_time_of_calculation,
-      0
+      0,
     ) || 0;
 
   return (

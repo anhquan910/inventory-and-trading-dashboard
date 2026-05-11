@@ -1,3 +1,4 @@
+// Imports
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,11 +21,12 @@ import { useForm } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import { useSignupMutation, signupSchema } from "@/hooks/use-auth";
 
+// Component Definition
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { mutateAsync, isPending } = useSignupMutation();
+  const { mutateAsync, isPending } = useSignupMutation(); // Set up signup mutation and request state
 
   const form = useForm({
     defaultValues: {
@@ -37,7 +39,7 @@ export function SignupForm({
       onChange: signupSchema,
     },
     onSubmit: async ({ value }) => await mutateAsync(value),
-  });
+  }); // Initialize form state with validation schema and submit handler
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -57,7 +59,6 @@ export function SignupForm({
             }}
           >
             <FieldGroup>
-              {/* --- FULL NAME --- */}
               <form.Field
                 name="full_name"
                 children={(field) => (
@@ -72,7 +73,7 @@ export function SignupForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       className={cn(
                         field.state.meta.errors.length > 0 &&
-                          "border-destructive focus-visible:ring-destructive"
+                          "border-destructive focus-visible:ring-destructive",
                       )}
                     />
                     {field.state.meta.errors.length > 0 && (
@@ -80,9 +81,8 @@ export function SignupForm({
                     )}
                   </Field>
                 )}
-              />
-
-              {/* --- EMAIL --- */}
+              />{" "}
+              {/* Full name input field with validation error handling */}
               <form.Field
                 name="email"
                 children={(field) => (
@@ -98,7 +98,7 @@ export function SignupForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       className={cn(
                         field.state.meta.errors.length > 0 &&
-                          "border-destructive focus-visible:ring-destructive"
+                          "border-destructive focus-visible:ring-destructive",
                       )}
                     />
                     {field.state.meta.errors.length > 0 && (
@@ -106,11 +106,9 @@ export function SignupForm({
                     )}
                   </Field>
                 )}
-              />
-
-              {/* --- PASSWORDS GRID --- */}
+              />{" "}
+              {/* Email input field with inline validation display */}
               <Field className="grid grid-cols-2 gap-4">
-                {/* Password Field */}
                 <form.Field
                   name="password"
                   children={(field) => (
@@ -125,7 +123,7 @@ export function SignupForm({
                         onChange={(e) => field.handleChange(e.target.value)}
                         className={cn(
                           field.state.meta.errors.length > 0 &&
-                            "border-destructive focus-visible:ring-destructive"
+                            "border-destructive focus-visible:ring-destructive",
                         )}
                       />
                       {field.state.meta.errors.length > 0 && (
@@ -133,9 +131,8 @@ export function SignupForm({
                       )}
                     </Field>
                   )}
-                />
-
-                {/* Confirm Password Field */}
+                />{" "}
+                {/* Password input field with error styling */}
                 <form.Field
                   name="confirmPassword"
                   children={(field) => (
@@ -152,7 +149,7 @@ export function SignupForm({
                         onChange={(e) => field.handleChange(e.target.value)}
                         className={cn(
                           field.state.meta.errors.length > 0 &&
-                            "border-destructive focus-visible:ring-destructive"
+                            "border-destructive focus-visible:ring-destructive",
                         )}
                       />
                       {field.state.meta.errors.length > 0 && (
@@ -160,30 +157,28 @@ export function SignupForm({
                       )}
                     </Field>
                   )}
-                />
+                />{" "}
+                {/* Confirm password input field with validation feedback */}
               </Field>
-
               <FieldDescription>
                 Must be at least 8 characters long.
               </FieldDescription>
-
-              {/* --- SUBMIT BUTTON --- */}
               <Field>
                 <Button type="submit" className="w-full" disabled={isPending}>
                   {isPending ? "Creating Account..." : "Create Account"}
                 </Button>
                 <FieldDescription className="text-center">
                   Already have an account?{" "}
-                  {/* Changed from <a> to <Link> for client-side routing */}
                   <Link to="/login" className="underline hover:text-primary">
                     Sign in
                   </Link>
                 </FieldDescription>
-              </Field>
+              </Field>{" "}
+              {/* Submit button and sign-in link with pending state handling */}
             </FieldGroup>
           </form>
         </CardContent>
       </Card>
     </div>
   );
-}
+} // Render the signup card with full name, email, password inputs, and submit behavior

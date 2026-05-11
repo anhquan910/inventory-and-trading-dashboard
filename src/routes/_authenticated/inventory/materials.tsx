@@ -4,6 +4,7 @@ import { columns } from "./-components/column";
 import { DataTable } from "./-components/data-table";
 import { AddMaterialDialog } from "./-components/add-material-dialog";
 
+// Materials inventory route for managing raw stock and restocking dialogues
 export const Route = createFileRoute("/_authenticated/inventory/materials")({
   component: RouteComponent,
 });

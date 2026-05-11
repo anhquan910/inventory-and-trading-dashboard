@@ -2,6 +2,8 @@ import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { useUpdateMaterial, type Material } from "@/hooks/use-inventory";
 
+// Dialog used to update material stock, cost, and reorder settings
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

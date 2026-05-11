@@ -26,6 +26,7 @@ import { Separator } from "@/components/ui/separator";
 import { TrendingUp, Calculator } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+// Market analytics page for viewing gold price trends and forecasting impact
 export const Route = createFileRoute("/_authenticated/market/")({
   component: RouteComponent,
 });

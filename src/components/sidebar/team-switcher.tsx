@@ -1,3 +1,4 @@
+// Imports
 import * as React from "react";
 import { ChevronsUpDown, Plus } from "lucide-react";
 
@@ -17,6 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+// Component Definition
 export function TeamSwitcher({
   teams,
 }: {
@@ -26,13 +28,16 @@ export function TeamSwitcher({
     plan: string;
   }[];
 }) {
+  // Sidebar Hook and State
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
+  // Early Return
   if (!activeTeam) {
     return null;
   }
 
+  // Render Team Switcher
   return (
     <SidebarMenu>
       <SidebarMenuItem>

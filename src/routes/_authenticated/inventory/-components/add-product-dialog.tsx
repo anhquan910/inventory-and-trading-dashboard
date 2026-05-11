@@ -3,6 +3,8 @@ import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { useCreateProduct } from "@/hooks/use-products";
 
+// Dialog component for creating a new finished goods product
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

@@ -2,10 +2,12 @@ import axios from "axios";
 import { toast } from "sonner";
 import { authStore, logout } from "@/stores/auth";
 
+// Create axios instance with base URL
 export const api = axios.create({
   baseURL: "http://localhost:8000/api/v1",
 });
 
+// Add authorization token to all requests
 api.interceptors.request.use(
   (config) => {
     const token = authStore.state.token;
@@ -21,6 +23,7 @@ api.interceptors.request.use(
   }
 );
 
+// Handle authentication errors and display error messages
 api.interceptors.response.use(
   (response) => response,
   (error) => {

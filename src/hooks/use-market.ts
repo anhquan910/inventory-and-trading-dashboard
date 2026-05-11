@@ -1,5 +1,5 @@
-import { api } from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/axios"; // Axios instance for API calls
+import { useQuery } from "@tanstack/react-query"; // React Query hook for data fetching
 
 export const useMarketTrend = () => {
   return useQuery({
@@ -9,4 +9,4 @@ export const useMarketTrend = () => {
       return res.data;
     }
   });
-};
+}; // Hook to fetch current market trend data for gold pricing

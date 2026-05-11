@@ -1,3 +1,4 @@
+// Imports
 import {
   Folder,
   Forward,
@@ -23,6 +24,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+// Component Definition
 export function NavProjects({
   projects,
 }: {
@@ -32,8 +34,10 @@ export function NavProjects({
     icon: LucideIcon;
   }[];
 }) {
+  // Sidebar State
   const { isMobile } = useSidebar();
 
+  // Render Projects
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>

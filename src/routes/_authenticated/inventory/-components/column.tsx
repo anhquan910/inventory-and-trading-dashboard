@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Pencil } from "lucide-react";
 
+// Column definitions for the materials inventory table with edit actions
 export const columns: ColumnDef<Material>[] = [
   {
     accessorKey: "sku",

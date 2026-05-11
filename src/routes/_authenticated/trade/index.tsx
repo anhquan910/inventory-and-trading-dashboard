@@ -31,6 +31,8 @@ import {
   Wallet,
 } from "lucide-react";
 
+// Trading desk page for retail sales and raw material trades
+
 interface CartItem {
   id: string;
   targetId: number;

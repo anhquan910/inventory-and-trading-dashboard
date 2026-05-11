@@ -2,6 +2,7 @@ import { LoginForm } from "@/components/login-form";
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 
+// Login route page with branding and login form
 export const Route = createFileRoute("/_auth/login")({
   component: RouteComponent,
 });
